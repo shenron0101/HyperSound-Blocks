@@ -2,7 +2,7 @@ const MULTICALL_ADDRESS = '0xcA11bde05977b3631167028862bE2a173976CA11'
 
 const urlParams = new URLSearchParams(window.location.search)
 const VERSION = urlParams.get('v')
-const CHAIN_PARAM = urlParams.get('chain')?.toUpperCase() || 'ETHER'
+const CHAIN_PARAM = urlParams.get('chain')?.toUpperCase() || 'ARBITRUM'
 
 let web3
 let ETH_PRICE, UPDATE_INTERVAL, ETH_PRICE_INTERVAL
@@ -13,6 +13,7 @@ let OLDEST_LOADED_BLOCK = null
 
 const CHAINS = {
     ETHER: {
+        etherscanChainId: 1,
         name: 'Ethereum',
         icon: 'https://icons.llamao.fi/icons/chains/rsz_ethereum.jpg',
         blockTime: 12,
@@ -28,6 +29,7 @@ const CHAINS = {
         ]
     },
     ARBITRUM: {
+         etherscanChainId: 42161,
          name: 'Arbitrum',
          icon: 'https://icons.llamao.fi/icons/chains/rsz_arbitrum.jpg',
          blockTime: 0.25,
@@ -42,6 +44,7 @@ const CHAINS = {
          ]
      },
      BASE: {
+         etherscanChainId: 8453,
          name: 'Base',
          icon: 'https://icons.llamao.fi/icons/chains/rsz_base.jpg',
          blockTime: 2,
@@ -56,6 +59,7 @@ const CHAINS = {
          ]
      },
     OPTIMISM: {
+        etherscanChainId: 10,
         name: 'Optimism',
         icon: 'https://icons.llamao.fi/icons/chains/rsz_optimism.jpg',
         blockTime: 2,
@@ -70,6 +74,7 @@ const CHAINS = {
         ]
     },
     BLAST: {
+        etherscanChainId: 81457,
         name: 'Blast',
         icon: 'https://icons.llamao.fi/icons/chains/rsz_blast.jpg',
         blockTime: 2,
@@ -85,6 +90,7 @@ const CHAINS = {
         ]
     },
     POLYGON: {
+        etherscanChainId: 137,
         name: 'Polygon',
         icon: 'https://icons.llamao.fi/icons/chains/rsz_polygon.jpg',
         blockTime: 2,
@@ -98,6 +104,7 @@ const CHAINS = {
         ]
     },
     POLYGON_ZKEVM: {
+        etherscanChainId: 1101,
         name: 'Polygon zkEVM',
         icon: 'https://icons.llamao.fi/icons/chains/rsz_polygon-zkevm.jpg',
         blockTime: 2,
@@ -111,6 +118,7 @@ const CHAINS = {
         ]
     },
     ZKSYNC: {
+        etherscanChainId: 324,
         name: 'zkSync Era',
         icon: 'https://icons.llamao.fi/icons/chains/rsz_zksync%20era.jpg',
         blockTime: 1,
@@ -124,6 +132,7 @@ const CHAINS = {
         ]
     },
     SCROLL: {
+        etherscanChainId: 534352,
         name: 'Scroll',
         icon: 'https://icons.llamao.fi/icons/chains/rsz_scroll.jpg',
         blockTime: 3,
@@ -137,6 +146,7 @@ const CHAINS = {
         ]
     },
     TAIKO: {
+        etherscanChainId: 167000,
         name: 'Taiko',
         icon: 'https://icons.llamao.fi/icons/chains/rsz_taiko.jpg',
         blockTime: 20,
@@ -178,6 +188,7 @@ const CHAINS = {
         ]
     },
     LINEA: {
+        etherscanChainId: 59144,
         name: 'Linea',
         icon: 'https://icons.llamao.fi/icons/chains/rsz_linea.jpg',
         blockTime: 2,
@@ -191,6 +202,7 @@ const CHAINS = {
         ]
     },
     BSC: {
+        etherscanChainId: 56,
         name: 'BSC',
         icon: 'https://icons.llamao.fi/icons/chains/rsz_bsc.jpg',
         blockTime: 3,
@@ -253,6 +265,7 @@ const CHAINS = {
         ]
     },
     AVAX: {
+        etherscanChainId: 43114,
         name: 'Avalanche',
         icon: 'https://icons.llamao.fi/icons/chains/rsz_avalanche.jpg',
         blockTime: 3,
@@ -277,6 +290,7 @@ const CHAINS = {
         ]
     },
     FANTOM: {
+        etherscanChainId: 250,
         name: 'Fantom',
         icon: 'https://icons.llamao.fi/icons/chains/rsz_fantom.jpg',
         blockTime: 1,
@@ -303,6 +317,7 @@ const CHAINS = {
         ]
     },
     CRONOS: {
+        etherscanChainId: 25,
         name: 'Cronos',
         icon: 'https://icons.llamao.fi/icons/chains/rsz_cronos.jpg',
         blockTime: 3,
@@ -330,6 +345,7 @@ const CHAINS = {
         ]
     },
     GNOSIS: {
+        etherscanChainId: 100,
         name: 'Gnosis',
         icon: 'https://icons.llamao.fi/icons/chains/rsz_gnosis.jpg',
         blockTime: 5,
@@ -357,6 +373,7 @@ const CHAINS = {
         ]
     },
     APECHAIN: {
+        etherscanChainId: 33139,
         name: 'ApeChain',
         icon: 'https://icons.llamao.fi/icons/chains/rsz_apechain.jpg',
         blockTime: 1,
@@ -395,7 +412,7 @@ const CHAINS = {
     }
 }
 
-let CURRENT_CHAIN = CHAINS[CHAIN_PARAM] || CHAINS.ETHER
+let CURRENT_CHAIN = CHAINS[CHAIN_PARAM] || CHAINS.ARBITRUM
 document.documentElement.style.setProperty('--animation-speed', CURRENT_CHAIN.animationSpeed)
 
 function updatePageTitles() {
@@ -624,6 +641,7 @@ function createBlockElement(block) {
     const blockElem = document.createElement('div')
     blockElem.className = 'block'
     blockElem.id = `block-${block.number}`
+    blockElem.dataset.block = block.number
 
     const fillPercentage = Math.min(block.gasUsed / block.gasLimit * 100, 100)
     blockElem.style.setProperty('--fill-percentage', `${fillPercentage}%`)
@@ -680,99 +698,9 @@ function createPendingBlockElement() {
     return block
 }
 
-async function showBlockDetails(blockNumber) {
-    const blockDetails = elem('#blockDetails')
-    elems('.block').forEach(b => b.classList.remove('active'))
-    
-    let blockElement
-    if (blockNumber > LAST_ETH_BLOCK) {
-        blockElement = elem('#pendingBlock')
-    } else {
-        blockElement = elem(`#block-${blockNumber}`)
-    }
-    
-    if (!blockElement) return
-    
-    blockElement.classList.add('active')
-    blockDetails.classList.add('active')
-    
-    try {
-        console.log('getBlock()', blockNumber)
-        const block = await web3.eth.getBlock(blockNumber)
-        if (!block) {
-            blockDetails.innerHTML = '<p>Block details not available</p>'
-            return
-        }
-
-        const transactions = await Promise.all(
-            block.transactions.slice(0, 10).map(async txHash => {
-                console.log('getTransaction() getTransactionReceipt()', txHash)
-                const tx = await web3.eth.getTransaction(txHash)
-                const receipt = await web3.eth.getTransactionReceipt(txHash)
-                return { ...tx, status: receipt.status }
-            })
-        )
-
-        blockDetails.innerHTML = `
-            <div class="block-head-list">
-                <div class="block-head-item">
-                    <span class="mdi mdi-cube"></span>
-                    Block #${block.number}
-                </div>
-                <div class="block-head-item">
-                    <span class="mdi mdi-clock"></span>
-                    Mined: <span class="time-ago" data-timestamp="${block.timestamp}">
-                        ${formatTimeAgo(block.timestamp)}
-                    </span>
-                </div>
-                <div class="block-head-item">
-                    <span class="mdi mdi-pickaxe"></span>
-                    Miner: <a href="${CURRENT_CHAIN.explorer}/address/${block.miner}" target="_blank">
-                        ${createBlockie(block.miner)} ${formatAddress(block.miner)}
-                    </a>
-                </div>
-                <div class="block-head-item">
-                    <span class="mdi mdi-gas-station"></span>
-                    Gas Used: ${formatNumber(block.gasUsed)} / ${formatNumber(block.gasLimit)}
-                    (${((block.gasUsed / block.gasLimit) * 100).toFixed(1)}%)
-                </div>
-            </div>
-            <p style="margin-top: 30px; margin-bottom: 15px; font-size: 20px;">
-                <span class="mdi mdi-swap-horizontal"></span>
-                <b>${block.transactions.length}</b>
-                transactions (showing first 10):
-            </p>
-            <div class="transactions-list">
-                ${transactions.map(tx => `
-                    <div class="transaction-item ${tx.status ? 'success' : 'failed'}">
-                        <div class="tx-hash">
-                            <a href="${CURRENT_CHAIN.explorer}/tx/${tx.hash}" target="_blank">
-                                ${tx.hash.substring(0, 10)}...${tx.hash.substring(58)}
-                            </a>
-                            ${tx.status ? 
-                                '<span class="tx-status success">Success</span>' : 
-                                '<span class="tx-status failed">Failed</span>'
-                            }
-                        </div>
-                        <div class="tx-addresses">
-                            From: ${formatAddress(tx.from)}
-                            ${tx.to ? `To: ${formatAddress(tx.to)}` : '<span class="contract-creation">Contract Creation</span>'}
-                        </div>
-                        <div class="tx-value">
-                            Value: ${web3.utils.fromWei(tx.value, 'ether')} ETH
-                            ${tx.input && tx.input !== '0x' ? 
-                                '<span class="contract-interaction">Contract Interaction</span>' : 
-                                ''
-                            }
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-        `
-    } catch (error) {
-        console.error('Error showing block details:', error)
-        blockDetails.innerHTML = '<p>Error loading block details</p>'
-    }
+// Block details are rendered by openBlockView() in blockview.js
+function showBlockDetails(blockNumber, opts = {}) {
+    return openBlockView(blockNumber, { address: SEARCH?.address || null, ...opts })
 }
 
 function formatGasPrice(wei) {

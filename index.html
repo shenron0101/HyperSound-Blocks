@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ethereum Block Explorer</title>
     <!-- <link rel="icon" href="/img/logo.ico"> -->
-    <link rel="stylesheet" href="styles.css?forceReload=16">
+    <link rel="stylesheet" href="styles.css?forceReload=17">
     
     <!-- Open Graph tags -->
     <meta property="og:title" content="Ethereum Block Explorer">
@@ -16,21 +16,6 @@
     <meta property="og:image:height" content="2400">
     <meta property="og:image:alt" content="Ethereum Blocks Preview">
     
-    <!-- Matomo -->
-    <script>
-        var _paq = window._paq = window._paq || [];
-        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-        _paq.push(['trackPageView']);
-        _paq.push(['enableLinkTracking']);
-        (function() {
-        var u="//anal.coolhd.hu/";
-        _paq.push(['setTrackerUrl', u+'matomo.php']);
-        _paq.push(['setSiteId', '17']);
-        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-        g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-        })();
-    </script>
-    <!-- End Matomo Code -->
   
 </head>
 <body>
@@ -44,6 +29,100 @@
             <img src="/img/etherscan-logo-circle-light.svg" alt="Etherscan Logo">
         </a>
     </header>
+
+
+    <section class="search-section">
+        <form id="searchForm" class="search-bar" autocomplete="off">
+            <span class="mdi mdi-magnify"></span>
+            <input id="searchInput" type="text" spellcheck="false" placeholder="Search address, tx hash or block number">
+            <button type="button" id="advancedToggle" title="Advanced filters"><span class="mdi mdi-tune-variant"></span> Advanced</button>
+            <button type="submit" class="primary">Search</button>
+            <button type="button" id="settingsBtn" title="Search settings"><span class="mdi mdi-cog"></span></button>
+        </form>
+        <div class="search-meta">
+            <span id="sourceBadge" class="source-badge"></span>
+            <span id="searchStatus"></span>
+            <button type="button" id="searchCancel" style="display:none">Cancel</button>
+        </div>
+        <div id="searchProgress" class="search-progress" style="display:none"><div></div></div>
+
+        <div id="advancedPanel" class="advanced-panel">
+            <div class="filter-grid">
+                <label>Direction
+                    <select id="fDirection">
+                        <option value="any">In + out</option>
+                        <option value="in">Incoming only</option>
+                        <option value="out">Outgoing only</option>
+                    </select>
+                </label>
+                <div class="filter-types">Type
+                    <div id="searchTypes">
+                        <label><input type="checkbox" value="normal" checked> Normal tx</label>
+                        <label><input type="checkbox" value="internal" checked> Internal</label>
+                        <label><input type="checkbox" value="erc20" checked> ERC-20</label>
+                        <label><input type="checkbox" value="nft" checked> NFT</label>
+                    </div>
+                </div>
+                <label>Token (symbol or contract)
+                    <input id="fToken" type="text" placeholder="e.g. USDC or 0x…">
+                    <span id="tokenShortcuts" class="token-shortcuts"></span>
+                </label>
+                <label>Amount min
+                    <input id="fMin" type="text" inputmode="decimal" placeholder="0">
+                </label>
+                <label>Amount max
+                    <input id="fMax" type="text" inputmode="decimal" placeholder="∞">
+                </label>
+                <label>From block
+                    <input id="fFromBlock" type="number" min="0" placeholder="RPC default: latest − 1,000,000">
+                </label>
+                <label>To block
+                    <input id="fToBlock" type="number" min="0" placeholder="latest">
+                </label>
+                <label>From date (UTC)
+                    <input id="fFromDate" type="date">
+                </label>
+                <label>To date (UTC)
+                    <input id="fToDate" type="date">
+                </label>
+                <label>Counterparty address
+                    <input id="fCounterparty" type="text" placeholder="0x… (full or partial)">
+                </label>
+                <label>Status
+                    <select id="fStatus">
+                        <option value="any">Any</option>
+                        <option value="success">Success</option>
+                        <option value="failed">Failed</option>
+                    </select>
+                </label>
+                <label>Method
+                    <input id="fMethod" type="text" placeholder="transfer, swap… or 0xa9059cbb">
+                </label>
+                <label>Sort
+                    <select id="fSort">
+                        <option value="desc">Newest first</option>
+                        <option value="asc">Oldest first</option>
+                    </select>
+                </label>
+                <label>Max results
+                    <input id="fLimit" type="number" min="1" max="10000" value="1000">
+                </label>
+            </div>
+            <div class="filter-actions">
+                <button type="button" id="filtersReset">Reset filters</button>
+                <span class="muted small">Amounts are in token units (e.g. 3.5 USDC). Token symbol match is exact, so fake lookalike tokens won't match "USDC".</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="resultsSection" class="results-section" style="display:none">
+        <div id="resultsSummary" class="results-summary"></div>
+        <div id="resultsContainer" class="results-container">
+            <div class="blocks-scroll results-scroll" id="resultsScroll"></div>
+        </div>
+        <button type="button" id="resultsListToggle"><span class="mdi mdi-table"></span> Show / hide result list</button>
+        <div id="resultsTable" class="results-table open"></div>
+    </section>
 
     <div class="blocks-section">
         <div class="blocks-container">
@@ -104,10 +183,37 @@
     </div>
 
 
+
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <h2>Search settings</h2>
+            <label class="setting">Etherscan API key (free, from etherscan.io/myapikey)
+                <input id="sApiKey" type="password" autocomplete="off" placeholder="Paste your API key">
+                <span class="muted small">Stored only in this browser (localStorage). Never put in the page URL. Without a key, search falls back to an RPC scan that only finds token transfers.</span>
+            </label>
+            <label class="setting">Data source
+                <select id="sSource">
+                    <option value="auto">Auto (Etherscan if key set, else RPC)</option>
+                    <option value="rpc">Always RPC log scan</option>
+                </select>
+            </label>
+            <label class="setting">RPC eth_getLogs chunk size (blocks)
+                <input id="sChunk" type="number" min="1" value="100000">
+                <span class="muted small">arb1.arbitrum.io allows 100,000. Ranges that are too big are split automatically.</span>
+            </label>
+            <div class="modal-buttons">
+                <button type="button" id="sCancel" class="modal-button cancel">Cancel</button>
+                <button type="button" id="sSave" class="modal-button continue">Save</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/DaWe35/The-simplest-JavaScript-framework-in-the-world@main/narf.js"></script>
-    <script src="app.js?forceReload=17"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/ethereum-blockies@0.1.1/blockies.min.js"></script>
+    <script src="app.js?forceReload=18"></script>
+    <script src="blockview.js?v=1"></script>
+    <script src="search.js?v=1"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
 </body>
 </html>
