@@ -1,0 +1,17 @@
+{
+  "name": "hypersound-trie-explorer",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:trie": "bun scripts/build-trie.js",
+    "test": "bun test tests/"
+  },
+  "dependencies": {
+    "@ethereumjs/rlp": "10.1.1",
+    "@noble/hashes": "2.0.1",
+    "d3": "7.9.0"
+  },
+  "devDependencies": {
+    "@ethereumjs/trie": "6.2.1"
+  }
+}

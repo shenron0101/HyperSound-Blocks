@@ -404,6 +404,11 @@ async function openBlockView(blockNumber, opts = {}) {
                     <a class="bv-ext" href="${esc(CURRENT_CHAIN.explorer)}/block/${num}" target="_blank">Open in explorer <span class="mdi mdi-open-in-new"></span></a>
                 </div>
             </div>
+            <div class="bv-tabs" role="tablist">
+                <button class="bv-tab" data-tab="overview" role="tab">Overview</button>
+                <button class="bv-tab" data-tab="anatomy" role="tab">Block anatomy <span class="muted small">header + entries</span></button>
+            </div>
+            <div id="bvOverview">
             <details class="bv-fields-box">
                 <summary>Choose block parameters</summary>
                 <div id="bvFieldChooser" class="field-chooser"></div>
@@ -416,6 +421,8 @@ async function openBlockView(blockNumber, opts = {}) {
                 <span class="pager"><button id="bvPrevPage">‹</button> <span id="bvPage"></span> <button id="bvNextPage">›</button></span>
             </div>
             <div class="transactions-list" id="bvTxList"></div>
+            </div>
+            <div id="bvAnatomy" hidden></div>
         `
         renderFieldChooser()
         renderParams()
@@ -428,9 +435,12 @@ async function openBlockView(blockNumber, opts = {}) {
         const only = elem('#bvOnlyMatching')
         if (only) only.onchange = () => { BV.onlyMatching = only.checked; BV.page = 0; renderTxs() }
 
+        elems('.bv-tab').forEach(b => { b.onclick = () => setBlockTab(b.dataset.tab) })
+        setBlockTab(loadPrefs('bv-tab', 'overview') === 'anatomy' ? 'anatomy' : 'overview')
+
         await renderTxs()
         if (typeof onBlockViewOpened === 'function') onBlockViewOpened(num)
-        const target = BV.txHash && Array.from(elems('#bvTxList .transaction-item')).find(e => lc(e.dataset.hash) === BV.txHash)
+        const target = BV.tab === 'overview' && BV.txHash && Array.from(elems('#bvTxList .transaction-item')).find(e => lc(e.dataset.hash) === BV.txHash)
         ;(target || details).scrollIntoView({ behavior: 'smooth', block: target ? 'center' : 'start' })
     } catch (error) {
         console.error('Error showing block details:', error)

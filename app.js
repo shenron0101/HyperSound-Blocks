@@ -21,11 +21,11 @@ const CHAINS = {
         explorer: 'https://etherscan.io',
         maxChangeRate: BigInt(1250), // 12.5%
         rpc: [
-            'https://eth.llamarpc.com',
+            // Working ones first (2026-11-09): publicnode + drpc serve eth_getBlockReceipts and eth_getProof.
+            'https://ethereum-rpc.publicnode.com',
+            'https://eth.drpc.org',
             'https://ethereum.publicnode.com',
-            'https://rpc.ankr.com/eth',
-            'https://cloudflare-eth.com',
-            'https://eth.drpc.org'
+            'https://eth.llamarpc.com'
         ]
     },
     ARBITRUM: {

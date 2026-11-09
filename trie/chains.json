@@ -1,0 +1,387 @@
+{
+  "ETHER": {
+    "etherscanChainId": 1,
+    "name": "Ethereum",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_ethereum.jpg",
+    "blockTime": 12,
+    "animationSpeed": "1s",
+    "explorer": "https://etherscan.io",
+    "maxChangeRate": "1250",
+    "rpc": [
+      "https://ethereum-rpc.publicnode.com",
+      "https://eth.drpc.org",
+      "https://ethereum.publicnode.com",
+      "https://eth.llamarpc.com"
+    ]
+  },
+  "ARBITRUM": {
+    "etherscanChainId": 42161,
+    "name": "Arbitrum",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_arbitrum.jpg",
+    "blockTime": 0.25,
+    "animationSpeed": "0.1s",
+    "explorer": "https://arbiscan.io",
+    "maxChangeRate": "800",
+    "rpc": [
+      "https://arb1.arbitrum.io/rpc",
+      "https://arbitrum-one.public.blastapi.io",
+      "https://arbitrum.llamarpc.com",
+      "https://arbitrum.blockpi.network/v1/rpc/public"
+    ]
+  },
+  "BASE": {
+    "etherscanChainId": 8453,
+    "name": "Base",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_base.jpg",
+    "blockTime": 2,
+    "animationSpeed": "0.5s",
+    "explorer": "https://basescan.org",
+    "maxChangeRate": "200",
+    "rpc": [
+      "https://mainnet.base.org",
+      "https://base.llamarpc.com",
+      "https://base.blockpi.network/v1/rpc/public",
+      "https://base.meowrpc.com"
+    ]
+  },
+  "OPTIMISM": {
+    "etherscanChainId": 10,
+    "name": "Optimism",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_optimism.jpg",
+    "blockTime": 2,
+    "animationSpeed": "0.5s",
+    "explorer": "https://optimistic.etherscan.io",
+    "maxChangeRate": "200",
+    "rpc": [
+      "https://mainnet.optimism.io",
+      "https://optimism.llamarpc.com",
+      "https://optimism.blockpi.network/v1/rpc/public",
+      "https://optimism.meowrpc.com"
+    ]
+  },
+  "BLAST": {
+    "etherscanChainId": 81457,
+    "name": "Blast",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_blast.jpg",
+    "blockTime": 2,
+    "animationSpeed": "0.5s",
+    "explorer": "https://blastscan.io",
+    "maxChangeRate": "200",
+    "rpc": [
+      "https://rpc.blast.io",
+      "https://rpc.ankr.com/blast",
+      "https://blast.din.dev/rpc",
+      "https://blastl2-mainnet.public.blastapi.io",
+      "https://blast.blockpi.network/v1/rpc/public"
+    ]
+  },
+  "POLYGON": {
+    "etherscanChainId": 137,
+    "name": "Polygon",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_polygon.jpg",
+    "blockTime": 2,
+    "animationSpeed": "0.5s",
+    "explorer": "https://polygonscan.com",
+    "maxChangeRate": "200",
+    "rpc": [
+      "https://polygon-rpc.com",
+      "https://polygon.llamarpc.com",
+      "https://polygon.drpc.org"
+    ]
+  },
+  "POLYGON_ZKEVM": {
+    "etherscanChainId": 1101,
+    "name": "Polygon zkEVM",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_polygon-zkevm.jpg",
+    "blockTime": 2,
+    "animationSpeed": "0.5s",
+    "explorer": "https://zkevm.polygonscan.com",
+    "maxChangeRate": "200",
+    "rpc": [
+      "https://zkevm-rpc.com",
+      "https://polygon-zkevm.drpc.org",
+      "https://1rpc.io/polygon/zkevm"
+    ]
+  },
+  "ZKSYNC": {
+    "etherscanChainId": 324,
+    "name": "zkSync Era",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_zksync%20era.jpg",
+    "blockTime": 1,
+    "animationSpeed": "0.25s",
+    "explorer": "https://explorer.zksync.io",
+    "maxChangeRate": "200",
+    "rpc": [
+      "https://mainnet.era.zksync.io",
+      "https://zksync.meowrpc.com",
+      "https://zksync.drpc.org"
+    ]
+  },
+  "SCROLL": {
+    "etherscanChainId": 534352,
+    "name": "Scroll",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_scroll.jpg",
+    "blockTime": 3,
+    "animationSpeed": "0.5s",
+    "explorer": "https://scrollscan.com",
+    "maxChangeRate": "200",
+    "rpc": [
+      "https://rpc.scroll.io",
+      "https://scroll.drpc.org",
+      "https://scroll-mainnet.public.blastapi.io"
+    ]
+  },
+  "TAIKO": {
+    "etherscanChainId": 167000,
+    "name": "Taiko",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_taiko.jpg",
+    "blockTime": 20,
+    "animationSpeed": "0.5s",
+    "explorer": "https://explorer.katla.taiko.xyz",
+    "maxChangeRate": "200",
+    "rpc": [
+      "https://rpc.mainnet.taiko.xyz",
+      "https://taiko-rpc.publicnode.com",
+      "https://rpc.ankr.com/taiko",
+      "https://taiko-mainnet.gateway.tenderly.co",
+      "https://taiko.drpc.org"
+    ]
+  },
+  "BOB": {
+    "name": "Bob",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_bob.jpg",
+    "blockTime": 3,
+    "animationSpeed": "1s",
+    "explorer": "https://bobscan.io",
+    "maxChangeRate": "2000",
+    "rpc": [
+      "https://rpc.gobob.xyz",
+      "https://bob.gateway.tenderly.co",
+      "https://bob.drpc.org"
+    ]
+  },
+  "ZIRCUIT": {
+    "name": "Zircuit",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_zircuit.jpg",
+    "blockTime": 2,
+    "animationSpeed": "0.5s",
+    "explorer": "https://explorer.zircuit.com/",
+    "maxChangeRate": "200",
+    "rpc": [
+      "https://zircuit1-mainnet.liquify.com",
+      "https://zircuit-mainnet.drpc.org",
+      "https://node.histori.xyz/zircuit-mainnet/8ry9f6t9dct1se2hlagxnd9n2a"
+    ]
+  },
+  "LINEA": {
+    "etherscanChainId": 59144,
+    "name": "Linea",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_linea.jpg",
+    "blockTime": 2,
+    "animationSpeed": "0.5s",
+    "explorer": "https://lineascan.build",
+    "maxChangeRate": "200",
+    "rpc": [
+      "https://rpc.linea.build",
+      "https://linea.drpc.org",
+      "https://1rpc.io/linea"
+    ]
+  },
+  "BSC": {
+    "etherscanChainId": 56,
+    "name": "BSC",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_bsc.jpg",
+    "blockTime": 3,
+    "animationSpeed": "0.5s",
+    "explorer": "https://bscscan.com",
+    "maxChangeRate": "2000",
+    "rpc": [
+      "https://bscrpc.com",
+      "https://binance.llamarpc.com",
+      "https://bsc-pokt.nodies.app"
+    ]
+  },
+  "MANTA": {
+    "name": "Manta",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_manta.jpg",
+    "blockTime": 10,
+    "animationSpeed": "0.5s",
+    "explorer": "https://pacific-explorer.manta.network",
+    "maxChangeRate": "200",
+    "rpc": [
+      "https://pacific-rpc.manta.network/http",
+      "https://manta-pacific.drpc.org"
+    ]
+  },
+  "MODE": {
+    "name": "Mode",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_mode.jpg",
+    "blockTime": 2,
+    "animationSpeed": "0.5s",
+    "explorer": "https://explorer.mode.network",
+    "maxChangeRate": "2000",
+    "rpc": [
+      "https://mainnet.mode.network",
+      "https://1rpc.io/mode"
+    ]
+  },
+  "LISK": {
+    "name": "Lisk",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_lisk.jpg",
+    "blockTime": 2,
+    "animationSpeed": "0.5s",
+    "explorer": "https://blockscout.lisk.com/",
+    "maxChangeRate": "2000",
+    "rpc": [
+      "https://lisk.gateway.tenderly.co",
+      "https://lisk.drpc.org",
+      "https://rpc.api.lisk.com"
+    ]
+  },
+  "AVAX": {
+    "etherscanChainId": 43114,
+    "name": "Avalanche",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_avalanche.jpg",
+    "blockTime": 3,
+    "animationSpeed": "0.5s",
+    "explorer": "https://snowtrace.io/",
+    "maxChangeRate": "2000",
+    "rpc": [
+      "https://rpc.ankr.com/avalanche"
+    ]
+  },
+  "ZORA": {
+    "name": "Zora",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_zora.jpg",
+    "blockTime": 2,
+    "animationSpeed": "0.5s",
+    "explorer": "https://explorer.zora.energy",
+    "maxChangeRate": "2000",
+    "rpc": [
+      "https://rpc.zora.energy",
+      "https://zora.drpc.org",
+      "https://node.histori.xyz/zora-mainnet/8ry9f6t9dct1se2hlagxnd9n2a"
+    ]
+  },
+  "FANTOM": {
+    "etherscanChainId": 250,
+    "name": "Fantom",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_fantom.jpg",
+    "blockTime": 1,
+    "animationSpeed": "0.5s",
+    "explorer": "https://ftmscan.com",
+    "maxChangeRate": "2000",
+    "rpc": [
+      "https://rpcapi.fantom.network",
+      "https://rpc.ftm.tools",
+      "https://rpc.ankr.com/fantom"
+    ]
+  },
+  "CORE": {
+    "name": "Core",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_core.jpg",
+    "blockTime": 3,
+    "animationSpeed": "1s",
+    "explorer": "https://scan.coredao.org/",
+    "maxChangeRate": "2000",
+    "rpc": [
+      "https://rpc.coredao.org",
+      "https://core.drpc.org",
+      "https://rpc.ankr.com/core"
+    ]
+  },
+  "CRONOS": {
+    "etherscanChainId": 25,
+    "name": "Cronos",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_cronos.jpg",
+    "blockTime": 3,
+    "animationSpeed": "1s",
+    "explorer": "https://cronoscan.com",
+    "maxChangeRate": "2000",
+    "rpc": [
+      "https://evm.cronos.org",
+      "https://rpc.ankr.com/cronos",
+      "https://cronos.drpc.org",
+      "https://cronos.blockpi.network/v1/rpc/private"
+    ]
+  },
+  "BITLAYER": {
+    "name": "BitLayer",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_bitlayer.jpg",
+    "blockTime": 3,
+    "animationSpeed": "1s",
+    "explorer": "https://explorer.bitlayer.io",
+    "maxChangeRate": "2000",
+    "rpc": [
+      "https://rpc.bitlayer.io",
+      "https://rpc.bitlayer-rpc.com",
+      "https://rpc.ankr.com/bitlayer"
+    ]
+  },
+  "GNOSIS": {
+    "etherscanChainId": 100,
+    "name": "Gnosis",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_gnosis.jpg",
+    "blockTime": 5,
+    "animationSpeed": "1s",
+    "explorer": "https://gnosisscan.io",
+    "maxChangeRate": "2000",
+    "rpc": [
+      "https://rpc.gnosischain.com",
+      "https://1rpc.io/gnosis",
+      "https://rpc.ankr.com/gnosis"
+    ]
+  },
+  "ROOTSTOCK": {
+    "name": "Rootstock",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_rootstock.jpg",
+    "blockTime": 30,
+    "animationSpeed": "1s",
+    "explorer": "https://explorer.rsk.co",
+    "maxChangeRate": "2000",
+    "rpc": [
+      "https://public-node.rsk.co",
+      "https://rootstock-mainnet.public.blastapi.io",
+      "https://rootstock.drpc.org",
+      "https://mycrypto.rsk.co"
+    ]
+  },
+  "APECHAIN": {
+    "etherscanChainId": 33139,
+    "name": "ApeChain",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_apechain.jpg",
+    "blockTime": 1,
+    "animationSpeed": "0.5s",
+    "explorer": "https://explorer.apechain.network/",
+    "maxChangeRate": "2000",
+    "rpc": [
+      "https://rpc.apechain.com",
+      "https://apechain.drpc.org",
+      "https://node.histori.xyz/apechain-mainnet/8ry9f6t9dct1se2hlagxnd9n2a"
+    ]
+  },
+  "REYA": {
+    "name": "Reya",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_reya.jpg",
+    "blockTime": 2,
+    "animationSpeed": "0.5s",
+    "explorer": "https://explorer.reya.network/",
+    "maxChangeRate": "2000",
+    "rpc": [
+      "https://rpc.reya.network"
+    ]
+  },
+  "FUSE": {
+    "name": "Fuse",
+    "icon": "https://icons.llamao.fi/icons/chains/rsz_fuse.jpg",
+    "blockTime": 5,
+    "animationSpeed": "1s",
+    "explorer": "https://explorer.fuse.io/",
+    "maxChangeRate": "2000",
+    "rpc": [
+      "https://rpc.fuse.io",
+      "https://fuse.drpc.org",
+      "hhttps://fuse.liquify.com"
+    ]
+  }
+}

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0f0f0f">
+    <title>Transaction trie · Arbitrum Blocks</title>
+    <link rel="icon" href="img/logo.ico">
+    <link rel="stylesheet" href="styles.css?forceReload=20">
+    <link rel="stylesheet" href="trie/explorer.css?v=3">
+</head>
+<body>
+    <header>
+        <h1><a id="dashboard-title" href="./?chain=ARBITRUM">Arbitrum Blocks</a></h1>
+        <a href="https://github.com/DaWe35/HyperSound-Blocks/tree/ethereum" target="_blank" rel="noopener noreferrer"><img src="img/github-mark-white.svg" alt="GitHub"></a>
+        <a id="chain-explorer" href="https://arbiscan.io" target="_blank" rel="noopener noreferrer"><img src="img/etherscan-logo-circle-light.svg" alt="Block explorer"></a>
+    </header>
+    <main class="container">
+        <section class="heading">
+            <a id="back" href="./?chain=ARBITRUM" class="back">← Block anatomy</a>
+            <div class="trie-page-title"><h2 id="title">Transaction trie</h2><span id="network" class="source-badge">Arbitrum</span><span id="block-label" class="muted"></span></div>
+            <p id="description" class="description">Inspect the trie committed to by this block.</p>
+        </section>
+        <nav id="trie-tabs" class="trie-tabs" aria-label="Block tries"></nav>
+        <section class="commitment" aria-label="Root commitment">
+            <div class="root-label"><span class="root-dot"></span><span id="root-label">HEADER ROOT</span></div>
+            <code id="root-hash">Loading block…</code>
+            <button id="copy-root" class="quiet" title="Copy root hash" disabled>Copy</button>
+            <span id="verification" class="badge">Not yet verified</span>
+        </section>
+        <form id="lookup" class="lookup">
+            <label id="lookup-label" for="lookup-input">FIND A TRANSACTION</label>
+            <div class="lookup-controls"><input id="lookup-input" placeholder="Transaction index or 0x hash" autocomplete="off" spellcheck="false" required><button id="lookup-submit" type="submit" class="primary">Trace path <span>↗</span></button></div>
+            <p id="lookup-help">Payloads load only when you open a leaf. Nothing is fetched for collapsed branches.</p>
+        </form>
+        <div id="notice" role="status" aria-live="polite" hidden></div>
+        <section class="workspace">
+            <div class="visual-panel">
+                <div class="canvas-toolbar">
+                    <div class="view-switch" role="group" aria-label="Visualization"><button id="graph-view" class="active" aria-pressed="true">Graph</button><button id="json-view" aria-pressed="false">JSON</button></div>
+                    <div class="canvas-actions"><button id="collapse" title="Collapse all branches">Collapse</button><button id="fit" title="Fit visible tree">Fit</button><button id="zoom-out" aria-label="Zoom out">−</button><button id="zoom-in" aria-label="Zoom in">+</button></div>
+                </div>
+                <div id="graph" aria-label="Interactive Merkle Patricia trie"><svg id="trie-svg" role="img" aria-label="Trie graph. Use node buttons to expand branches or inspect leaves."></svg><div id="canvas-empty">Connecting to the chain…</div></div>
+                <div id="json-tree" class="json-tree" hidden></div>
+                <div class="canvas-footer"><div class="legend"><span class="branch">Branch</span><span class="extension">Extension</span><span class="leaf">Leaf</span><span class="unloaded">Unloaded hash</span></div><span id="visible-count">0 nodes visible</span></div>
+            </div>
+            <aside id="inspector" class="inspector" aria-label="Selected node details"><p class="eyebrow">Node inspector</p><h2>Root node</h2><p class="inspector-intro">Expand a node to reveal its children. Select a leaf to load its payload.</p></aside>
+        </section>
+        <section class="bottom-bar"><div><span id="load-count">0 payloads loaded</span><span class="divider">/</span><span id="request-count">0 RPC requests</span><span class="divider">/</span><span>On-demand · cached in this page</span></div><div class="verify-actions"><button id="verify-all" disabled>Verify full trie</button><button id="cancel-verify" hidden>Cancel</button></div></section>
+        <details class="connection"><summary>RPC connection & data availability</summary><p id="availability">Transaction and receipt payloads are loaded individually. Root verification requires every payload. State proofs reveal only requested paths, not the entire world state.</p><form id="rpc-form"><label for="rpc-url">Custom RPC endpoint</label><div class="lookup-controls"><input id="rpc-url" type="url" placeholder="https://your-arbitrum-rpc.example" spellcheck="false" required><button type="submit">Connect</button></div></form><p id="connection-status"></p></details>
+        <div class="page-footer"><span>Merkle–Patricia trie · Block anatomy</span><a href="https://ethereum.org/en/developers/docs/data-structures-and-encoding/patricia-merkle-trie/" target="_blank" rel="noopener noreferrer">How to read this structure ↗</a></div>
+    </main>
+    <script type="module" src="assets/trie-explorer.js?v=3"></script>
+</body>
+</html>
